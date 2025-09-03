@@ -55,4 +55,32 @@ describe('BookManager', () => {
         expect(allBooks).toContain(book1);
         expect(allBooks).toContain(book2);
     });
+
+    test('Test gagal jumlah buku salah', () => {
+        const book = new Book("Pemrograman", "Andi", 2020);
+        bookManager.addBook(book);
+        // harusnya 1, tapi dicek 2
+        expect(bookManager.getBookCount()).toBe(2);
+    });
+
+    test('Test gagal hapus buku dibalik hasil', () => {
+        const book = new Book("Basis Data", "Erlangga", 2021);
+        bookManager.addBook(book);
+        const removed = bookManager.removeBook("Basis Data");
+        // harusnya true, tapi dipaksa false
+        expect(removed).toBe(false);
+    });
+
+    test('Test gagal jumlah buku by author salah', () => {
+        const book1 = new Book("Python Dasar", "Andi", 2020);
+        const book2 = new Book("Pemrograman Lanjut", "Andi", 2021);
+
+        bookManager.addBook(book1);
+        bookManager.addBook(book2);
+
+        const booksByAndi = bookManager.findBooksByAuthor("Andi");
+        // harusnya 2, tapi dicek 3
+        expect(booksByAndi.length).toBe(3);
+    });
+
 });
